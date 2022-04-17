@@ -1,0 +1,50 @@
+// Código para el proyecto de "Procesadores de Lenguaje" de la ULPGC
+
+// Este lenguaje inventado tiene como fin crear una calculadora 
+// de las operaciones simples como, sumar, restar, multiplicar y dividir
+
+// El formáto solo contará con variables de tipo entero
+
+// La idea es con dos números distintos y otro iniciado a 1 hasta 4 ( que actua en modo de contador )
+// ir recorriendo el contador y según el número de este, realizar las diferentes operaciones
+// en esos dos números
+
+// Primero se declaran las variables en la cabecera del programa
+
+// Valor del primer número para la calculadora
+principal num_1 : 4;
+// Valor del segundo número para la calculadora
+principal num_2 : 2;		
+
+// Valor del contador con su recorrido especificado
+contador cont: 1 <= 4;		
+
+// A partir de la palabra reservada "start" se realizan las instrucciones
+
+start
+	// bucle que actua en el contador
+	for cont {			
+		// contador vale 1	
+		when cont : 1 do {	
+			// se suman los números y se muestran	
+			sum(num_1, num_2);	
+		}
+		// contador vale 2		
+		when cont : 2 do {
+			// se restan los números	
+			res(num_1, num_2);	
+		}
+		// contador vale 3
+		when cont : 3 do {	
+			// se multiplican los números	
+			mul(num_1, num_2);	
+		}
+		// contador vale 4
+		when cont : 4 do {
+			// se dividen los números
+			div(num_1, num_2);	
+		}
+	}
+end
+
+// Y la palabra reservada "end*" declara el fin del programa 
