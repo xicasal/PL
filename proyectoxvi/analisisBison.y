@@ -23,7 +23,7 @@
 /******************/
 
 modulo
-    : lista_declaraciones       { printf (" modulo -> lista_declaraciones y bloque_instruciones\n"); }
+    : lista_declaraciones bloque_instrucciones      { printf (" modulo -> lista_declaraciones y bloque_instruciones\n"); }
     ;
 
     /****************************/
@@ -55,13 +55,60 @@ declaracion_contador
     /****************************/
     /*Parte de las instrucciones*/
     /****************************/
-/*
+
 bloque_instrucciones
     : START lista_instrucciones END         { printf (" bloque_instrucciones -> 'start' instruccion/es 'end'\n"); }
     ;
 
-*/
+lista_instrucciones
+    : instruccion                       { printf (" lista_instrucciones -> instruccion\n"); }
+    | lista_instrucciones instruccion   { printf (" lista_instrucciones -> lista_instrucciones\n"); }
+    ;
 
+instruccion
+    : instruccion_de_for         { printf (" instruccion -> instruccion_de_for\n"); }
+    | instruccion_de_when        { printf (" instruccion -> instruccion_de_when\n"); }
+    | instruccion_de_do          { printf (" instruccion -> instruccion_de_do\n"); }
+    ;
+
+instruccion_de_for
+    : INSTRUCCION_FOR IDENTIFICADOR '{' lista_instrucciones '}' { printf (" instruccion_de_for -> bloque_para_la_instruccion_for\n"); }
+    ;
+
+instruccion_de_when
+    : INSTRUCCION_WHEN IDENTIFICADOR ':' NUMERO instruccion_de_do    { printf (" instruccion_de_when -> bloque_para_la_instruccion_when\n"); }
+    ;
+
+instruccion_de_do
+    : INSTRUCCION_DO '{' funcion '}'                { printf (" instruccion_de_do -> bloque_para_la_instruccion_do\n"); }
+    ;
+
+funcion
+    : funcion_de_suma               { printf (" funcion -> funcion_de_suma\n"); }
+    | funcion_de_resta              { printf (" funcion -> funcion_de_resta\n"); }
+    | funcion_de_multiplicacion     { printf (" funcion -> funcion_de_multiplicacion\n"); }
+    | funcion_de_division           { printf (" funcion -> funcion_de_division\n"); }
+    ;
+
+funcion_de_suma
+    : FUNCION_SUM cuerpo_de_funcion { printf (" funcion_de_suma -> funcion_para_sumar_dos_numeros\n"); }
+    ;
+
+funcion_de_resta
+    : FUNCION_RES cuerpo_de_funcion { printf (" funcion_de_resta -> funcion_para_restar_dos_numeros\n"); }
+    ;
+
+funcion_de_multiplicacion
+    : FUNCION_MUL cuerpo_de_funcion { printf (" funcion_de_multiplicacion -> funcion_para_multiplicar_dos_numeros\n"); }
+    ;
+
+funcion_de_division
+    : FUNCION_DIV cuerpo_de_funcion { printf (" funcion_de_division -> funcion_para_dividir_dos_numeros\n"); }
+    ;
+
+cuerpo_de_funcion
+    : '(' IDENTIFICADOR ',' IDENTIFICADOR ')' ';'   { printf (" cuerpo_de_funcion -> contiene_los_dos_numeros_para_la_funcion\n"); }
+    ;
 
 %%
 
