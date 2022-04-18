@@ -1,0 +1,4 @@
+principal num_1 : 4;
+principal num_2 : 2;
+
+contador cont : 1 <= 4;
