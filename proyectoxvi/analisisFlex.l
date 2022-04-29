@@ -34,6 +34,8 @@ principal {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(
 
 contador {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(TIPOCONTADOR);}
 
+local {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(TIPOLOCAL);}
+
 start {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(START);}
 
 end {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(END);}
@@ -51,6 +53,10 @@ res {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(FUNCIO
 mul {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(FUNCION_MUL);}
 
 div {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(FUNCION_DIV);}
+
+show {printf("linea %d, palabra reservada: %s\n", num_linea,yytext);return(FUNCION_SHOW);}
+
+"=" {printf("linea %d, operador: %s\n", num_linea,yytext);return('=');}
 
 ":" {printf("linea %d, operador: %s\n", num_linea,yytext);return(':');}
 

@@ -9,7 +9,7 @@
 // ir recorriendo el contador y según el número de este, realizar las diferentes operaciones
 // en esos dos números
 
-// Primero se declaran las variables en la cabecera del programa
+// Primero se declaran las variables globales en la cabecera del programa
 
 // Valor del primer número para la calculadora
 principal num_1 : 4;
@@ -22,27 +22,37 @@ contador cont: 1 <= 4;
 // A partir de la palabra reservada "start" se realizan las instrucciones
 
 start
+	// Creamos una variable local llamada "resultado" inicializada a cero
+	local resultado : 0;
 	// bucle que actua en el contador
 	for cont {			
 		// contador vale 1	
 		when cont : 1 do {	
-			// se suman los números y se muestran	
-			sum(num_1, num_2);	
+			// se suman los números y se guardan en la variable local "resultado"
+			resultado = sum(num_1, num_2);
+			// se muestra el valor guardado en la variable local "resultado"
+			show(resultado);
 		}
 		// contador vale 2		
 		when cont : 2 do {
-			// se restan los números	
-			res(num_1, num_2);	
+			// se restan los números y se guardan en la variable local "resultado"
+			resultado = res(num_1, num_2);
+			// se muestra el valor guardado en la variable local "resultado"
+			show(resultado);	
 		}
 		// contador vale 3
 		when cont : 3 do {	
-			// se multiplican los números	
-			mul(num_1, num_2);	
+			// se multiplican los números y se guardan en la variable local "resultado"
+			resultado = mul(num_1, num_2);
+			// se muestra el valor guardado en la variable local "resultado"
+			show(resultado);
 		}
 		// contador vale 4
 		when cont : 4 do {
-			// se dividen los números
-			div(num_1, num_2);	
+			// se dividen los números y se guardan en la variable local "resultado"
+			resultado = div(num_1, num_2);
+			// se muestra el valor guardado en la variable local "resultado"
+			show(resultado);
 		}
 	}
 end

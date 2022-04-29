@@ -10,9 +10,9 @@
 
 %}
 
-%token TIPOPRINCIPAL TIPOCONTADOR
+%token TIPOPRINCIPAL TIPOCONTADOR TIPOLOCAL
 %token START END INSTRUCCION_FOR INSTRUCCION_WHEN INSTRUCCION_DO
-%token FUNCION_SUM FUNCION_RES FUNCION_MUL FUNCION_DIV
+%token FUNCION_SUM FUNCION_RES FUNCION_MUL FUNCION_DIV FUNCION_SHOW
 %token NUMERO IDENTIFICADOR 
 %token MAYORIGUAL MENORIGUAL
 
@@ -58,6 +58,16 @@ declaracion_contador
 
 bloque_instrucciones
     : START lista_instrucciones END         { printf (" bloque_instrucciones -> 'start' instruccion/es 'end'\n"); }
+    | START lista_declaraciones_locales lista_instrucciones END { printf (" bloque_instrucciones -> 'start' declaraciones_locales instruccion/es 'end'\n"); }
+    ;
+
+lista_declaraciones_locales
+    : declaracion_local         { printf (" lista_declaraciones_locales -> declaracion_local\n"); }
+    | lista_declaraciones_locales declaracion_local { printf (" lista_declaraciones_locales -> lista_declaraciones_locales\n"); }
+    ;
+
+declaracion_local
+    : TIPOLOCAL IDENTIFICADOR ':' NUMERO ';'    { printf (" declaracion_local -> declaracion_local\n"); }
     ;
 
 lista_instrucciones
@@ -80,7 +90,12 @@ instruccion_de_when
     ;
 
 instruccion_de_do
-    : INSTRUCCION_DO '{' funcion '}'                { printf (" instruccion_de_do -> bloque_para_la_instruccion_do\n"); }
+    : INSTRUCCION_DO '{' lista_de_funciones '}'                { printf (" instruccion_de_do -> bloque_para_la_instruccion_do\n"); }
+    ;
+
+lista_de_funciones
+    : funcion                       { printf (" lista_de_funciones -> funcion\n"); }
+    | lista_de_funciones funcion    { printf (" lista_de_funciones -> lista_de_funciones\n"); }
     ;
 
 funcion
@@ -88,6 +103,15 @@ funcion
     | funcion_de_resta              { printf (" funcion -> funcion_de_resta\n"); }
     | funcion_de_multiplicacion     { printf (" funcion -> funcion_de_multiplicacion\n"); }
     | funcion_de_division           { printf (" funcion -> funcion_de_division\n"); }
+    | funcion_de_show               { printf (" funcion -> funcion_de_show\n"); }
+    | asignacion_variable_local     { printf (" funcion -> resultado_guardado_en_una_variable_local\n"); }
+    ;
+
+asignacion_variable_local
+    : IDENTIFICADOR '=' funcion_de_suma             { printf (" asignacion_variable_local -> valor_para_la_variable_local_de_la_funcion_suma\n"); }
+    | IDENTIFICADOR '=' funcion_de_resta            { printf (" asignacion_variable_local -> valor_para_la_variable_local_de_la_funcion_resta\n"); }
+    | IDENTIFICADOR '=' funcion_de_multiplicacion   { printf (" asignacion_variable_local -> valor_para_la_variable_local_de_la_funcion_multiplicacion\n"); }
+    | IDENTIFICADOR '=' funcion_de_division         { printf (" asignacion_variable_local -> valor_para_la_variable_local_de_la_funcion_division\n"); }
     ;
 
 funcion_de_suma
@@ -106,8 +130,13 @@ funcion_de_division
     : FUNCION_DIV cuerpo_de_funcion { printf (" funcion_de_division -> funcion_para_dividir_dos_numeros\n"); }
     ;
 
+funcion_de_show
+    : FUNCION_SHOW cuerpo_de_funcion { printf (" funcion_de_show -> funcion_para_mostrar_por_pantalla\n"); }
+    ;
+
 cuerpo_de_funcion
     : '(' IDENTIFICADOR ',' IDENTIFICADOR ')' ';'   { printf (" cuerpo_de_funcion -> contiene_los_dos_numeros_para_la_funcion\n"); }
+    | '(' IDENTIFICADOR ')' ';'                     { printf (" cuerpo_de_funcion -> contiene_el_valor_de_la_variable\n"); }
     ;
 
 %%
